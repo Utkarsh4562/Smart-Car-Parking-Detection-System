@@ -1,0 +1,471 @@
+/* style.css - Styles for Enhanced Smart Parking System */
+
+:root {
+    --primary: #4A90E2; /* Brighter Blue */
+    --primary-dark: #357ABD;
+    --secondary: #50E3C2; /* Teal accent */
+    --success: #7ED321; /* Vibrant Green */
+    --danger: #D0021B; /* Strong Red */
+    --warning: #F5A623; /* Orange */
+    --info: #4AB1E2; /* Lighter Blue for info states */
+    --light: #f8f9fa;
+    --dark: #333;
+    --grey: #ccc;
+    --white: #ffffff;
+    --font-family: 'Poppins', sans-serif;
+    --border-radius: 12px; /* Softer corners */
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    background-color: #eef2f7; /* Light cool grey background */
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px; /* Slightly wider */
+    margin: 20px auto; /* Add top margin */
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 380px; /* Adjust sidebar width */
+    gap: 30px; /* Increased gap */
+}
+
+header {
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    margin-bottom: 20px;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+h1 {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+h2, h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+h3 { font-size: 1.1rem; }
+
+.card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 30px; /* Increased spacing */
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0; /* Start hidden for animation */
+    animation-delay: calc(var(--card-index, 0) * 0.1s); /* Stagger animation */
+}
+
+.card-header {
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn {
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    border: none;
+    padding: 10px 20px; /* Slightly larger */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-weight: 600;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-right: 8px; /* Add spacing between buttons */
+    margin-bottom: 8px;
+}
+.btn:last-child { margin-right: 0; }
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.4);
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-success { background: linear-gradient(90deg, var(--success), #68b11a); }
+.btn-success:hover { box-shadow: 0 4px 10px rgba(126, 211, 33, 0.4); }
+.btn-danger { background: linear-gradient(90deg, var(--danger), #a60115); }
+.btn-danger:hover { box-shadow: 0 4px 10px rgba(208, 2, 27, 0.4); }
+.btn-warning { background: linear-gradient(90deg, var(--warning), #c4851c); }
+.btn-warning:hover { box-shadow: 0 4px 10px rgba(245, 166, 35, 0.4); }
+.btn-info { background: linear-gradient(90deg, var(--info), #3a9bc4); }
+.btn-info:hover { box-shadow: 0 4px 10px rgba(74, 177, 226, 0.4); }
+
+.hidden { display: none !important; } /* Use important to override other potential styles */
+
+.form-group {
+    margin-bottom: 18px; /* Increased spacing */
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+input[type="range"] {
+     width: 100%;
+     cursor: pointer;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+input[type="file"] {
+    padding: 5px; /* Specific padding for file input */
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #e4e9f0; /* Slightly darker background for contrast */
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background-color: var(--white); /* Canvas itself is white */
+}
+
+#statusBar {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px;
+    background-color: var(--light);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: var(--primary-dark);
+    border: 1px solid #eee;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+#statusBar.processing {
+    background-color: var(--warning);
+    color: var(--white);
+}
+#statusBar.error {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+
+.parking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); /* Slightly smaller spots */
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.parking-spot {
+    aspect-ratio: 3/4; /* More rectangular */
+    border: 2px solid var(--grey); /* Thicker border */
+    border-radius: 6px; /* Less rounded */
+    display: flex;
+    flex-direction: column; /* Stack icon and text */
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+    position: relative;
+    transition: all var(--transition-speed) ease-out;
+    cursor: default; /* Not clickable by default */
+    background-color: var(--white);
+    overflow: hidden; /* Hide overflowing animations */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+ .parking-spot .spot-id {
+     font-size: 0.65rem;
+     color: #777;
+     margin-top: 4px;
+ }
+
+.parking-spot.can-book {
+    cursor: pointer; /* Make bookable spots clickable */
+}
+
+.parking-spot.free {
+    border-color: var(--success);
+    color: var(--success);
+    background-color: #f0f9e8; /* Lighter green */
+}
+/* New: Style for suitable free spots */
+.parking-spot.free.suitable {
+    border-color: var(--info); /* Light blue border */
+    background-color: #e8f7ff; /* Lighter blue background */
+    color: var(--info);
+    box-shadow: 0 0 8px rgba(74, 177, 226, 0.5); /* Add a glow */
+}
+
+.parking-spot.occupied {
+    border-color: var(--danger);
+    color: var(--danger);
+    background-color: #fdecea; /* Lighter red */
+}
+
+.parking-spot.booked {
+    border-color: var(--warning);
+    color: var(--warning);
+    background-color: #fff8e1; /* Lighter yellow */
+}
+
+/* Animation for status change */
+.parking-spot.animate-status-change {
+    animation: statusChange 0.5s ease-out;
+}
+
+.booking-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fdfdff; /* Very light blue */
+    border-radius: var(--border-radius);
+    border: 1px solid #eef;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+    margin-top: 20px; /* Add spacing */
+}
+
+.tab {
+    padding: 10px 18px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; /* Overlap border */
+    color: #777;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+}
+
+.tab:hover {
+    color: var(--primary);
+}
+
+.tab.active {
+    border-bottom-color: var(--primary);
+    color: var(--primary);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--light);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+.user-details div:first-child {
+    font-weight: 600;
+}
+ .user-details small {
+     color: #777;
+     font-size: 0.85rem;
+ }
+
+
+#parkingStats {
+     background-color: #fdfdff;
+     padding: 15px;
+     border-radius: 8px;
+     margin-bottom: 20px;
+     border: 1px solid #eef;
+}
+ #parkingStats h3 {
+     margin-bottom: 10px;
+ }
+ #parkingStats div {
+     margin-bottom: 5px;
+     font-size: 0.9rem;
+ }
+#parkingStats span {
+     font-weight: 600;
+     float: right; /* Align numbers */
+ }
+ /* Clearfix for floated spans */
+ #parkingStats::after {
+    content: "";
+    display: table;
+    clear: both;
+ }
+
+
+.bookings-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px; /* Limit height */
+    overflow-y: auto; /* Add scroll if needed */
+}
+
+.booking-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    animation: fadeIn 0.3s ease;
+}
+.booking-item:last-child { border-bottom: none; }
+.booking-item span { font-weight: 600; }
+.booking-item button { /* Small cancel button */
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    margin-left: 10px;
+}
+
+
+.loader-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    z-index: 10;
+     opacity: 0;
+     visibility: hidden;
+     transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+ .loader-container.visible {
+     opacity: 1;
+     visibility: visible;
+ }
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulseAvailable { /* Kept if needed later */
+    0% { box-shadow: 0 0 0 0 rgba(126, 211, 33, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(126, 211, 33, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(126, 211, 33, 0); }
+}
+
+@keyframes statusChange {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        grid-template-columns: 1fr; /* Stack columns */
+    }
+    .sidebar {
+        order: -1; /* Move sidebar above main content on smaller screens */
+    }
+}
+ @media (max-width: 768px) {
+    .parking-grid {
+         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+         gap: 8px;
+    }
+     h1 { font-size: 1.5rem;}
+     .btn { padding: 8px 15px; font-size: 0.9rem;}
+ }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Smart Parking System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Smart Parking System</h1>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="card" style="--card-index: 1;">
+                <div class="card-header">Parking Configuration & Detection</div>
+                <div class="card-body">
+
+                    <div class="tabs">
+                        <div class="tab active" data-tab="upload">Upload & Settings</div>
+                        <div class="tab" data-tab="detection">Detection Controls</div>
+                    </div>
+
+                    <div class="tab-content active" data-tab="upload">
+                         <div class="form-group">
+                             <label for="fileInput">Upload Image/Video:</label>
+                             <input type="file" id="fileInput" accept="image/*,video/*">
+                         </div>
+                         <div class="form-group">
+                             <label for="detectionMethod">Detection Algorithm:</label>
+                             <select id="detectionMethod">
+                                 <option value="yolo" selected>YOLO (AI-based)</option>
+                                 <option value="traditional">Traditional (Threshold-based)</option>
+                                 <option value="pod">POD (Simulated)</option>
+                                 <option value="oct_dept">Oct Dept (Simulated)</option>
+                                 <option value="pakstra">PakStra (Simulated)</option>
+                             </select>
+                         </div>
+                        <div class="form-group traditional-option">
+                            <label for="thresholdValue">Threshold Value (Traditional): <span id="thresholdValueDisplay">100</span></label>
+                            <input type="range" id="thresholdValue" min="0" max="500" value="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="spaceWidth">Parking Space Width (Pixels):</label>
+                            <input type="number" id="spaceWidth" min="10" max="200" value="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="spaceHeight">Parking Space Height (Pixels):</label>
+                            <input type="number" id="spaceHeight" min="10" max="200" value="50">
+                        </div>
+                        <div class="form-group yolo-option"> <label for="confidenceThreshold">YOLO Confidence Threshold: <span id="confidenceThresholdDisplay">0.50</span></label>
+                            <input type="range" id="confidenceThreshold" min="0" max="100" value="50">
+                        </div>
+                         <p style="font-size: 0.85rem; color: #666;">Click on the canvas below to add parking spots (defaults to Medium size), right-click to remove.</p>
+                    </div>
+
+                    <div class="tab-content" data-tab="detection">
+                        <div id="statusBar">System Idle</div>
+                        <div class="btn-group">
+                            <button id="processBtn" class="btn btn-success">Process Media</button>
+                            <button id="resetBtn" class="btn btn-danger">Reset Spots</button>
+                            <button id="toggleBtn" class="btn btn-warning">Toggle Overlay</button>
+                        </div>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 15px;">Use 'Process Media' to analyze the uploaded image/video. 'Reset Spots' removes all defined parking spaces. 'Toggle Overlay' shows/hides detection visualization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="--card-index: 2;">
+                <div class="card-header">Live View / Media Preview</div>
+                <div class="card-body">
+                    <div class="canvas-container">
+                        <canvas id="mainCanvas"></canvas>
+                        <canvas id="processedCanvas" class="hidden" style="position: absolute; top: 0; left: 0; opacity: 0.7; pointer-events: none;"></canvas> <div id="loadingIndicator" class="loader-container">
+                            <div class="loader"></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="card" style="--card-index: 3;">
+                <div class="card-header">Dashboard</div>
+                <div class="card-body">
+                    <div class="user-info">
+                        <div class="user-avatar">SPS</div> <div class="user-details">
+                            <div>Operator View</div>
+                            <small>Welcome to the Parking Dashboard</small>
+                        </div>
+                    </div>
+
+                    <div id="parkingStats">
+                        <h3>Parking Statistics</h3>
+                        <div>Total Spaces: <span id="totalSpaces">0</span></div>
+                        <div>Available Spaces: <span id="availableSpaces">0</span></div>
+                        <div>Occupied Spaces: <span id="occupiedSpaces">0</span></div>
+                        <div>Booked Spaces: <span id="bookedSpaces">0</span></div>
+                        <div>Suitable Available: <span id="suitableSpaces">0</span></div> </div>
+
+                    <h3>Parking Grid Overview</h3>
+                    <div class="parking-grid" id="parkingGrid">
+                        <em style="color: #888; font-size: 0.9rem;">Upload media and define spots to see the grid.</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="--card-index: 4;">
+                <div class="card-header">Booking Management</div>
+                <div class="card-body">
+                    <div class="booking-form">
+                        <h3>Book a Spot</h3>
+                        <div class="form-group">
+                            <label for="carSize">Your Car Size:</label>
+                            <select id="carSize">
+                                <option value="small">Small (Fits S, M, L)</option>
+                                <option value="medium" selected>Medium (Fits M, L)</option>
+                                <option value="large">Large (Fits L)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="parkingSpot">Available & Suitable Spot:</label>
+                            <select id="parkingSpot">
+                                <option value="">-- Select Car Size First --</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="duration">Duration (hours):</label>
+                            <input type="number" id="duration" min="1" max="24" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleNumber">Vehicle Number:</label>
+                            <input type="text" id="vehicleNumber" placeholder="e.g., MP20AB1234">
+                        </div>
+                        <button id="bookBtn" class="btn btn-success">Book Now</button>
+                         <div id="bookingMessage" style="margin-top: 10px; font-weight: 600;"></div>
+                    </div>
+
+                    <div class="tabs">
+                        <div class="tab active" data-tab="current">Current Bookings</div>
+                        <div class="tab" data-tab="history">Booking History</div>
+                    </div>
+
+                    <div class="tab-content active" data-tab="current">
+                        <ul class="bookings-list" id="currentBookings">
+                            <li class="no-bookings">No current bookings.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" data-tab="history">
+                        <ul class="bookings-list" id="bookingHistory">
+                             <li class="no-bookings">No booking history yet.</li>
+                        </ul>
+                         <button id="clearHistoryBtn" class="btn btn-danger btn-small" style="margin-top: 15px; padding: 5px 10px; font-size: 0.8rem;">Clear History</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/onnxruntime-web/1.16.1/ort.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/opencv.js/4.6.0/opencv.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
